@@ -1,0 +1,8 @@
+# Source videos — too large for GitHub (max 100 MB/file).
+# The web versions live in /media as H.264 MP4.
+Video/
+
+# OS / editor junk
+Thumbs.db
+.DS_Store
+*.log

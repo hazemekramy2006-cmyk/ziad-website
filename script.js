@@ -59,12 +59,8 @@
       'work.label': 'Selected Work',
       'work.title': "A few things I've worked on.",
       'work.intro': 'A mix of brand films, product shoots and short-form content — the names stay private, the work speaks.',
-      'work.c1c': 'Video Production', 'work.c1': 'Brand Commercial',
-      'work.c2c': 'Photography', 'work.c2': 'Product Shots',
-      'work.c3c': 'Short-Form', 'work.c3': 'Social Reels',
-      'work.c4c': 'Photography', 'work.c4': 'Event Coverage',
-      'work.c5c': 'Direction &amp; Edit', 'work.c5': 'Music Video',
-      'work.c6c': 'Content', 'work.c6': 'Behind The Scenes',
+      'work.video': 'Video',
+      'work.videos': 'videos',
 
       'skills.label': 'Tools &amp; Skills',
       'skills.title': 'The gear behind the work.',
@@ -173,12 +169,8 @@
       'work.label': 'أعمال مختارة',
       'work.title': 'شغلات قليلة اشتغلت عليها.',
       'work.intro': 'مزيج من أفلام البراندات وتصوير المنتجات والمحتوى الشورت فورم — الأسماء بتفضل خاصة، والشغل هو اللي بيتكلم.',
-      'work.c1c': 'إنتاج فيديو', 'work.c1': 'إعلان براوند',
-      'work.c2c': 'تصوير', 'work.c2': 'تصوير منتجات',
-      'work.c3c': 'شورت فورم', 'work.c3': 'ريلز السوشيال',
-      'work.c4c': 'تصوير', 'work.c4': 'تغطية فعاليات',
-      'work.c5c': 'إخراج ومونتاج', 'work.c5': 'فيديو كليب',
-      'work.c6c': 'محتوى', 'work.c6': 'وراء الكواليس',
+      'work.video': 'فيديو',
+      'work.videos': 'فيديو',
 
       'skills.label': 'الأدوات والمهارات',
       'skills.title': 'الأدوات اللي وراء الشغل.',
@@ -509,6 +501,31 @@
       });
     });
   }
+
+  /* ---------------- VIDEO GALLERY ---------------- */
+  const videos = Array.prototype.slice.call(document.querySelectorAll('.work-video video'));
+
+  videos.forEach(function (v) {
+    v.addEventListener('play', function () {
+      videos.forEach(function (other) {
+        if (other !== v && !other.paused && !other.ended) other.pause();
+      });
+      const box = v.closest('.work-visual');
+      if (box) box.classList.add('playing');
+    });
+
+    function idle() {
+      const box = v.closest('.work-visual');
+      if (box) box.classList.remove('playing');
+    }
+    v.addEventListener('pause', idle);
+    v.addEventListener('ended', idle);
+    v.addEventListener('error', function () {
+      const card = v.closest('.work-video');
+      if (card) card.classList.add('video-error');
+      idle();
+    });
+  });
 
   /* ---------------- PRINT CV ---------------- */
   const printBtn = document.getElementById('printBtn');
